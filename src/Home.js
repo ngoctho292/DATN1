@@ -1,6 +1,8 @@
 import axios from "axios";
 import { React, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Link } from "react-router-dom";
+
 // Import Swiper styles
 import ReactDOM from "react-dom";
 import Modal from "./Modal";
@@ -16,7 +18,7 @@ import "./Home.css";
 const options = {
   method: "GET",
   url: "https://moviesdatabase.p.rapidapi.com/titles",
-  params: { list: "top_boxoffice_200", year: "2022" },
+  params: { list: "top_boxoffice_200", limit: 15 },
   headers: {
     "X-RapidAPI-Key": "18ed8068bemsh0e28e6d1af6ef66p1a98c4jsnc64d87faea08",
     "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
@@ -25,7 +27,7 @@ const options = {
 const optiontoplist = {
   method: "GET",
   url: "https://moviesdatabase.p.rapidapi.com/titles",
-  params: { list: "most_pop_movies", year: "2021" },
+  params: { list: "top_rated_english_250" },
   headers: {
     "X-RapidAPI-Key": "18ed8068bemsh0e28e6d1af6ef66p1a98c4jsnc64d87faea08",
     "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
@@ -62,11 +64,22 @@ export default function Home() {
         console.error(error);
       });
   }, []);
+  const stopMovie = (e) => {
+    e.target.pause();
+    // e.target.poster()
+    console.log('off');
+  }
+
+  const playMovie = (e) => {
+    e.target.play();
+    console.log('on');
+  }
   return (
     <div className="container">
       <button className="button-default" onClick={toggle}>
         Show Modalll
       </button>
+      <Modal isShowing={isShowing} hide={toggle} />
       <h2>Top Box Office</h2>
       <Swiper
         navigation={{
@@ -85,11 +98,19 @@ export default function Home() {
             if (item.primaryImage !== null) {
               return (
                 <SwiperSlide>
-                  <div className="card" key={index}>
-                    <img src={item.primaryImage.url} alt="" />
-                    <p>{item.titleText.text}</p>
-                    <p>{item.releaseYear.year}</p>
-                    {/* <Iframe
+                  <Link to="/DetailsMovie">
+                    <div className="card" id="card" key={index}>
+                      <video
+                        onMouseOver={playMovie}
+                        onMouseOut={stopMovie}
+                        src='https://video-hover-1.superhi.com/1-island.mp4'
+                        poster={item.primaryImage.url}
+                        preload='none'
+                        loop />
+                      {/* <img src={item.primaryImage.url} alt="" /> */}
+                      <p>{item.titleText.text}</p>
+                      <p>{item.releaseYear.year}</p>
+                      {/* <Iframe
                 width="170px"
                 height="200px"
                 id="videoFrame"
@@ -99,14 +120,15 @@ export default function Home() {
                 frameBorder="0"
                 src={`https://v2.vidsrc.me/embed/${item.id}`}
               /> */}
-                  </div>
+                    </div>
+                  </Link>
                 </SwiperSlide>
               );
             }
           })}
         </div>
       </Swiper>
-      <h2 className="txt">Top List Movie</h2>
+      <h2 className="txt">Top Rated Movies</h2>
       <Swiper
         navigation={{
           clickable: true,
@@ -119,17 +141,18 @@ export default function Home() {
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
-        <h2>Top Box Office</h2>
+        {/* <h2>Top Box Office</h2> */}
         <div className="toplist">
           {toplistmovie?.map((item, index) => {
             if (item.primaryImage !== null) {
               return (
                 <SwiperSlide>
-                  <div className="card" key={index}>
-                    <img src={item.primaryImage.url} alt="" />
-                    <p>{item.titleText.text}</p>
-                    <p>{item.releaseYear.year}</p>
-                    {/* <Iframe
+                  <Link to="/DetailsMovie">
+                    <div className="card" key={index}>
+                      <img src={item.primaryImage.url} alt="" />
+                      <p>{item.titleText.text}</p>
+                      <p>{item.releaseYear.year}</p>
+                      {/* <Iframe
                 width="170px"
                 height="200px"
                 id="videoFrame"
@@ -139,7 +162,8 @@ export default function Home() {
                 frameBorder="0"
                 src={`https://v2.vidsrc.me/embed/${item.id}`}
               /> */}
-                  </div>
+                    </div>
+                  </Link>
                 </SwiperSlide>
               );
             }

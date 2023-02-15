@@ -5,33 +5,50 @@
   background: #0e0e0e; */
   background: #0e0e0e;
 }
+
 .modal {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+video {
+  width: 230px;
+  height: 338px;
+  position: relative;
+  display: inline-block;
+}
+
 h2 {
   color: rgb(211, 0, 0);
 }
+
 p {
   color: white;
   text-align: center;
   width: 224px;
 }
 
+a {
+  text-decoration: none;
+}
+
 .container .topbox {
   display: flex;
   gap: 10px;
 }
+
 .container .toplist {
   /* display: flex;
   gap: 10px; */
 }
+
 .container img {
   width: 224px;
   height: 332px;
 }
+
 .card {
   height: 460px;
 
@@ -41,6 +58,7 @@ p {
 
   border-radius: 10px;
 }
+
 .card :hover {
   border: 3px solid rgb(211, 0, 0);
   border-radius: 10px;
@@ -70,18 +88,19 @@ p {
 .swiper-slide img {
   display: block;
 }
+
 .swiper-slide img:hover {
-  -webkit-mask-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(rgba(221, 210, 210, 1)),
-    to(rgba(216, 216, 216, 0))
-  );
+  -webkit-mask-image: -webkit-gradient(linear,
+      left top,
+      left bottom,
+      from(rgba(221, 210, 210, 1)),
+      to(rgba(216, 216, 216, 0)));
 }
+
 .swiper-button-prev {
   color: rgb(211, 0, 0);
 }
+
 .swiper-button-next {
   color: rgb(211, 0, 0);
 }
